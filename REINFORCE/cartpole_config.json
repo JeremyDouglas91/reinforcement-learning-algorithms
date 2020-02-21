@@ -1,0 +1,14 @@
+[
+	{
+		"hidden_layer_sizes" : [4,4], 
+		"hidden_layer_activations" : ["elu", "elu"],
+		"learning_rate" : 1e-2,
+		"discount_factor" : 0.95
+	},
+	{
+		"num_epochs" : 100,
+		"episodes_per_epoch" : 10,
+		"max_steps" : 1000,
+		"plot_results" : true
+	}
+]
