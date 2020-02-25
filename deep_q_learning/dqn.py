@@ -91,7 +91,6 @@ class DQN:
     max_steps = training_params['max_steps']
     min_experiences = training_params['min_experiences']
     biffer_size = training_params['buffer_size']
-    terminal_reward = training_params['terminal_reward']
     batch_size = training_params['batch_size']
     copy_step = training_params['copy_step']
     plot = training_params['plot_results']
@@ -140,10 +139,6 @@ class DQN:
         # step in environment
         o2, r, d, _ = env.step(a)
         all_rewards[-1] += r
-
-        # give a special terminal_reward for failing to complete the task
-        if d and t < env.spec.max_episode_steps: 
-          r = terminal_reward
 
         # store transition
         buffer.store(o, a, r, o2, d)
