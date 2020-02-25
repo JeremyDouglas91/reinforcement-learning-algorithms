@@ -82,3 +82,6 @@ epoch: 12, average reward: 91.6
 epoch: 13, average reward: 63.6
 epoch: 14, average reward: 109.4
 ```
+5. Final results will be plotted and saved to the working directory
+
+![CP_results](https://github.com/JeremyDouglas91/reinforcement-learning-algorithms/blob/master/REINFORCE/CartPole-v0_returns.png)
