@@ -10,9 +10,9 @@ I have made an effort to create simple, modular python files which allow each al
 - Deep-Q Learning
 
 ### Dependancies:
-- `matplotlib==3.1.3`
 - `numpy==1.18.1`
 - `tensorflow-cpu==2.1.0`
+- `tensorboard==2.1.1`
 
 ### Example: running reinforce
 
