@@ -8,6 +8,7 @@ I have made an effort to create simple, modular python files which allow each al
 ### Algorithms (so far)
 - REINFORCE 
 - Deep-Q Learning
+- A2C
 
 ### Dependancies:
 - `numpy==1.18.1`
