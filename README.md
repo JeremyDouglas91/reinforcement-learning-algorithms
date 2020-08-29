@@ -59,4 +59,4 @@ max_steps = 200
 
 6. Navigate to _http://localhost:6006/_ to view training metrics on tensorboard:
 
-![CP_results](https://github.com/JeremyDouglas91/reinforcement-learning-algorithms/blob/master/REINFORCE/CartPole-v0_tensorboard.png)
+![CP_results](https://github.com/JeremyDouglas91/reinforcement-learning-algorithms/blob/master/REINFORCE/tensorboard_example.png)
