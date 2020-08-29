@@ -1,6 +1,0 @@
-FROM tensorflow/tensorflow:2.1.0-py3-jupyter
-RUN python -m pip install --upgrade pip
-RUN python -m pip install numpy
-RUN python -m pip install configparser
-RUN python -m pip install gym
-

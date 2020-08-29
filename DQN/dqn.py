@@ -10,7 +10,8 @@ import sys
 import tensorflow as tf
 
 class MyModel(tf.keras.Model):
-  """A simple mlp to be used for approximating Q-functions.
+  """
+  A simple mlp to be used for approximating Q-functions.
   """
   def __init__(self, n_states, n_fc, act, n_actions):
     super(MyModel, self).__init__()
