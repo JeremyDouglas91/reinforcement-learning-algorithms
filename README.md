@@ -1,88 +1,62 @@
 # reinforcement-learning-algorithms
 A repository of classic reinforcement learning algorithms implemented in TensorFlow 2.
 
-These implementations are simple and intended for experimenting with basic gym environments, or extended for more complicated tasks. I will add more algoritms over time.
+These implementations are simple (single script) and intended for experimenting with basic gym environments, or extended for more complicated tasks. I created the repository because I found it difficult to find straighforward, easy-to-interpret TF2 implementations of these algoirthms online.
 
-I have made an effort to create simple, modular python files which allow each alorithm to be run for any gym environment and configuration of parameters.
+I've created a docker container to make it easy to run the algoirthms without having to download tensorflow directly onto your machine.
+
+I will add more algoritms over time.
 
 ### Algorithms (so far)
 - REINFORCE 
-- Deep-Q Learning
+- DQN
 - A2C
 
 ### Dependancies:
+- `Docker 19.03.8`
+
+OR
+
+- `gym==0.17.2`
 - `numpy==1.18.1`
-- `tensorflow-cpu==2.1.0`
-- `tensorboard==2.1.1`
+- `tensorflow==2.0.1`
+- `tensorboard==2.0.2`
 
-### Example: running reinforce
+### Example: Running REINFORCE
 
-1. Set up the config file
+1. Pull the docker image:
 
-```
-[
-	{
-		"_comment" : "AGENT PARAMETERS",
-		"hidden_layer_sizes" : [4,4], 
-		"hidden_layer_activations" : ["elu", "elu"],
-		"learning_rate" : 1e-2,
-		"discount_factor" : 0.95
-	},
-	{
-		"_comment" : "TRAINING PARAMETERS",
-		"num_epochs" : 100,
-		"episodes_per_epoch" : 10,
-		"max_steps" : 1000,
-		"plot_results" : true
-	}
-]
-```
+`docker pull jeremydd/rl:latest`
 
-2. Create a driver file (with the envonment you want to test), `cartpole_test.py`
+2. Set the parameters in the .ini file (e.g.):
 
 ```
-import argparse
-import gym
-import json
-from reinforce import reinforce
+[MODEL_CONFIG]
+n_fc = 8
+act = elu
+lr =  1e-2
+gamma = 0.99
 
-def main(config_path):
-	with open(config_path, 'r') as f:
-		config_dict = json.load(f)
-	agent_params = config_dict[0]
-	training_params = config_dict[1]
-	env = gym.make("CartPole-v0")
-	reinforce.run(env, agent_params, training_params)
-
-if __name__ == "__main__":
-	parser = argparse.ArgumentParser()
-	parser.add_argument('--config_path', required=True)
-	args = parser.parse_args()
-	main(args.config_path)
+[TRAINING_CONFIG]
+eps_per_epoch = 10
+epochs = 100
+max_steps = 200
 ```
 
-3. Run `cartpole_test.py` passing it the path to your config file
+3. Launch the docker container in your working directory (map the docker port 6006 to the host TCP port 6006):
 
-`$ python cartpole_test.py --config_path "cartpole_config.json" `
+`docker run -it --rm -p 6006:6006 -v "$(pwd)":/wd -w /wd jeremydd/rl:latest bash`
 
-4. Rewards will be displayed in your terminal:
-```
-epoch: 0, average reward: 38.2
-epoch: 1, average reward: 37.2
-epoch: 2, average reward: 36.4
-epoch: 3, average reward: 33.5
-epoch: 4, average reward: 57.0
-epoch: 5, average reward: 26.4
-epoch: 6, average reward: 57.4
-epoch: 7, average reward: 42.9
-epoch: 8, average reward: 68.0
-epoch: 9, average reward: 48.9
-epoch: 10, average reward: 77.6
-epoch: 11, average reward: 59.8
-epoch: 12, average reward: 91.6
-epoch: 13, average reward: 63.6
-epoch: 14, average reward: 109.4
-```
-5. Final results will be plotted and saved to the working directory
+4. Run REINFORCE, specifying the log directory (for tensorboard) and the directory of the config file (e.g.):
 
-![CP_results](https://github.com/JeremyDouglas91/reinforcement-learning-algorithms/blob/master/REINFORCE/CartPole-v0_returns.png)
+`python reinforce.py --config-dir=config_reinforce_cartpole.ini --log-dir=log/ --env="CartPole-v0"`
+
+- Training information will be displayed in the terminal
+
+5. Launch tensorboard:
+
+`tensorboard --logdir=log/ --bind_all`
+
+6. Navigate to _http://localhost:6006/_ to view training metrics on tensorboard:
+
+![CP_results](https://github.com/JeremyDouglas91/reinforcement-learning-algorithms/blob/master/REINFORCE/CartPole-v0_tensorboard.png)
